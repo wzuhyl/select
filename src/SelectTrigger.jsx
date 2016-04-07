@@ -38,10 +38,12 @@ const SelectTrigger = React.createClass({
   },
 
   componentDidUpdate() {
-    if (this.props.dropdownMatchSelectWidth && this.props.visible) {
+    const { visible, dropdownMatchSelectWidth } = this.props;
+    if (visible) {
       const dropdownDOMNode = this.getPopupDOMNode();
       if (dropdownDOMNode) {
-        dropdownDOMNode.style.width = `${ReactDOM.findDOMNode(this).offsetWidth}px`;
+        const widthProp = dropdownMatchSelectWidth ? 'width' : 'minWidth';
+        dropdownDOMNode.style[widthProp] = `${ReactDOM.findDOMNode(this).offsetWidth}px`;
       }
     }
   },

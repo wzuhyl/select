@@ -373,7 +373,12 @@ const Select = React.createClass({
     }
     if (placeholder) {
       return (<span
-        style={{ display: hidden ? 'none' : 'block' }}
+        onMouseDown={preventDefaultEvent}
+        style={{
+          display: hidden ? 'none' : 'block',
+          ...UNSELECTABLE_STYLE,
+        }}
+        {...UNSELECTABLE_ATTRIBUTE}
         onClick={this.onPlaceholderClick}
         className={`${props.prefixCls}-search__field__placeholder`}
       >
@@ -416,9 +421,10 @@ const Select = React.createClass({
   setOpenState(open, needFocus) {
     this.clearDelayTimer();
     const { props, refs } = this;
-    if (this.state.open === open) {
-      return;
-    }
+    // can not optimize, if children is empty
+    // if (this.state.open === open) {
+    //   return;
+    // }
     this.setState({
       open,
     }, () => {
